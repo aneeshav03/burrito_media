@@ -14,7 +14,8 @@
 
 ## Features
 
-- If there is a stage called `Incoming`, then move ticket there. Do this check directly after the check for the Stage `draft`.(#6073)
+- Send contracts to contacts
+- After both party signed, automatically welcome email will be sent
 
 ---
 
