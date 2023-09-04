@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="sale_order_portal_content_inherit_updater" name="Sales Order Portal Template Updater"
+              inherit_id="sale.sale_order_portal_content">
+        <xpath expr="//section[@id='details']//thead//tr" position="replace">
+            <tr>
+                <th class="text-center">Geo Targeting</th>
+                <th class="text-center">Start Date</th>
+                <th class="text-center">End Date</th>
+                <th class="text-center">Media Type</th>
+                <th class="text-center">Tactic</th>
+                <th class="text-center">Audience</th>
+                <th class="text-center" id="product_name_header">Objective</th>
+                <th class="text-center">Buy Type</th>
+                <th class="text-center">Estimated Reach</th>
+                <th class="text-center">Estimated Impressions</th>
+                <th class="text-center">CPM</th>
+                <th class="text-center">Total Budget</th>
+            </tr>
+        </xpath>
+        <xpath expr="//section[@id='details']//tbody" position="replace">
+            <tbody class="sale_tbody">
+
+                <t t-set="current_subtotal" t-value="0"/>
+                <t t-set="lines_to_report" t-value="sale_order._get_order_lines_to_report()"/>
+
+                <t t-foreach="lines_to_report" t-as="line">
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                       groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                       groups="account.group_show_line_subtotals_tax_included"/>
+
+                    <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                        <t t-if="not line.display_type">
+                            <td class="text-center">
+                                <div id="geo_targeting">
+                                    <span t-field="line.geo_targeting"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="start_date">
+                                    <span t-esc="sale_order.start_date"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="end_date">
+                                    <span t-esc="sale_order.end_date"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="product_id">
+                                    <span t-esc="line.product_id.name"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="tactic">
+                                    <span t-esc="line.tactic"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="audience">
+                                    <span t-esc="line.audience"/>
+                                </div>
+                            </td>
+                            <td class="text-center" id="product_name">
+                                <span t-field="line.name"/>
+                            </td>
+                            <td class="text-center">
+                                <div id="quote_qty">
+                                    <span t-field="line.product_uom"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.estimated_reach"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.estimated_impressions"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.price_unit"/>
+                            </td>
+                            <td class="text-center">
+                                <span class="oe_order_line_price_subtotal" t-field="line.price_subtotal"/>
+                            </td>
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                            <td colspan="99">
+                                <span t-field="line.name"/>
+                            </td>
+                            <t t-set="current_section" t-value="line"/>
+                            <t t-set="current_subtotal" t-value="0"/>
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                            <td colspan="99">
+                                <span t-field="line.name"/>
+                            </td>
+                        </t>
+                    </tr>
+                </t>
+            </tbody>
+        </xpath>
+    </template>
+</odoo>

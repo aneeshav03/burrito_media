@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="report_saleorder_document" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//t[@t-set='address']" position="replace"/>
+        <xpath expr="//t[@t-set='information_block']" position="replace"/>
+        <xpath expr="//div[@id='informations']" position="replace">
+            <div class="row mt-4 mb-4" id="informations">
+                <div t-if="doc.partner_id" class="col-auto col-3 mw-100 mb-2" name="informations_reference">
+                    <strong>Agency:</strong>
+                    <p class="m-0" t-field="doc.partner_id.name"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Budget :</strong>
+                    <p class="m-0" t-field="doc.amount_total"/>
+                </div>
+                <div t-if="doc.user_id.name" class="col-auto col-3 mw-100 mb-2">
+                    <strong>Salesperson:</strong>
+                    <p class="m-0" t-field="doc.user_id"/>
+                </div>
+                <div class="col-auto col-3 mw-100 mb-2">
+                    <strong>Campaign:</strong>
+                    <p class="m-0" t-field="doc.campaign_id.name"/>
+                </div>
+            </div>
+        </xpath>
+
+        <xpath expr="//div[@name='so_total_summary']" position="replace"/>
+        <xpath expr="//thead//tr" position="replace">
+            <tr style="background-color:#d2dfeb;border:1px solid #d2dfeb">
+                <th class="text-center">Geo Targeting</th>
+                <th class="text-center">Start Date</th>
+                <th class="text-center">End Date</th>
+                <th class="text-center">Media Type</th>
+                <th class="text-center">Tactic</th>
+                <th class="text-center">Audience</th>
+                <th class="text-center" id="product_name_header">Objective</th>
+                <th class="text-center">Buy Type</th>
+                <th class="text-center">Estimated Reach</th>
+                <th class="text-center">Estimated Impressions</th>
+                <th class="text-center">CPM</th>
+                <th class="text-center">Total Budget</th>
+            </tr>
+        </xpath>
+        <xpath expr="//tbody" position="replace">
+            <tbody class="sale_tbody">
+
+                <t t-set="current_subtotal" t-value="0"/>
+                <t t-foreach="lines_to_report" t-as="line">
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal"
+                       groups="account.group_show_line_subtotals_tax_excluded"/>
+                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total"
+                       groups="account.group_show_line_subtotals_tax_included"/>
+
+                    <tr t-att-class="'bg-200 fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''">
+                        <t t-if="not line.display_type">
+                            <td class="text-center">
+                                <div id="geo_targeting">
+                                    <span t-field="line.geo_targeting"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="start_date">
+                                    <span t-esc="doc.start_date"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="end_date">
+                                    <span t-esc="doc.end_date"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="product_id">
+                                    <span t-esc="line.product_id.name"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="tactic">
+                                    <span t-esc="line.tactic"/>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div id="audience">
+                                    <span t-esc="line.audience"/>
+                                </div>
+                            </td>
+                            <td class="text-center" id="product_name">
+                                <span t-field="line.name"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.product_uom"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.estimated_reach"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.estimated_impressions"/>
+                            </td>
+                            <td class="text-center">
+                                <span t-field="line.price_unit"/>
+                            </td>
+                            <td class="text-center">
+                                <span class="text-end o_price_total" t-field="line.price_subtotal"/>
+                            </td>
+                        </t>
+                        <t t-if="line.display_type == 'line_section'">
+                            <td name="td_section_line" colspan="99">
+                                <span t-field="line.name"/>
+                            </td>
+                            <t t-set="current_section" t-value="line"/>
+                            <t t-set="current_subtotal" t-value="0"/>
+                        </t>
+                        <t t-if="line.display_type == 'line_note'">
+                            <td name="td_note_line" colspan="99">
+                                <span t-field="line.name"/>
+                            </td>
+                        </t>
+                    </tr>
+                </t>
+            </tbody>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_order_form" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="after">
+                <label for="start_date" string="Duration"/>
+                <div class="o_row">
+                    Start :
+                    <field name="start_date" nolabel="1" class="mr-4"/>
+                    -
+                    End :
+                    <field name="end_date" nolabel="1" class="mr-4"/>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='date_order']" position="after">
+                <xpath expr="//field[@name='campaign_id']" position="move"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position="attributes">
+                <attribute name="string">Media Type</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_id']" position="before">
+                <field name="geo_targeting"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="attributes">
+                <attribute name="string">Objective</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='name']" position="before">
+                <field name="tactic"/>
+                <field name="audience"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_uom']" position="after">
+                <field name="estimated_reach"/>
+                <field name="estimated_impressions"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="before">
+                <field name="cpm"/>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_uom_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="attributes">
+                <attribute name="string">Total Budget</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='tax_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_subtotal']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

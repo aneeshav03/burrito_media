@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="agreement_sign" model="ir.attachment">
+            <field name="name">Media_Services_Agreement.pdf</field>
+            <field name="datas" type="base64" file="burrito_mail/static/demo/Media_Services_Agreement.pdf"/>
+            <field name="mimetype">application/pdf</field>
+        </record>
+        <record id="template_agreement_sign" model="sign.template">
+            <field name="attachment_id" ref="agreement_sign"/>
+            <field name="create_uid" ref="base.user_admin"/>
+        </record>
+        
+        <record model="sign.item" id="sign_item_text">
+            <field name="template_id" ref="template_agreement_sign"/>
+            <field name="type_id" ref="sign.sign_item_type_text"/>
+            <field name="responsible_id" ref="sign.sign_item_role_company"/>
+            <field name="page" type="int">1</field>
+            <field name="posX" type="float">0.730</field>
+            <field name="posY" type="float">0.463</field>
+            <field name="width" type="float">0.093</field>
+            <field name="height" type="float">0.015</field>
+            <field name="name">Total Amount</field>
+        </record>
+        <record model="sign.item" id="sign_item_sign_company">
+            <field name="template_id" ref="template_agreement_sign"/>
+            <field name="type_id" ref="sign.sign_item_type_signature"/>
+            <field name="responsible_id" ref="sign.sign_item_role_company"/>
+            <field name="page" type="int">2</field>
+            <field name="posX" type="float">0.211</field>
+            <field name="posY" type="float">0.584</field>
+            <field name="width" type="float">0.230</field>
+            <field name="height" type="float">0.015</field>
+            <field name="name">Signature</field>
+        </record>
+        <record model="sign.item" id="sign_item_date_company">
+            <field name="template_id" ref="template_agreement_sign"/>
+            <field name="type_id" ref="sign.sign_item_type_date"/>
+            <field name="responsible_id" ref="sign.sign_item_role_company"/>
+            <field name="page" type="int">2</field>
+            <field name="posX" type="float">0.171</field>
+            <field name="posY" type="float">0.602</field>
+            <field name="width" type="float">0.150</field>
+            <field name="height" type="float">0.015</field>
+            <field name="name">Date</field>
+        </record>
+        <record model="sign.item" id="sign_item_date_sign_customer">
+            <field name="template_id" ref="template_agreement_sign"/>
+            <field name="type_id" ref="sign.sign_item_type_date"/>
+            <field name="responsible_id" ref="sign.sign_item_role_company"/>
+            <field name="page" type="int">1</field>
+            <field name="posX" type="float">0.652</field>
+            <field name="posY" type="float">0.135</field>
+            <field name="width" type="float">0.122</field>
+            <field name="height" type="float">0.015</field>
+            <field name="name">Date</field>
+        </record>
+        <record model="sign.item" id="sign_company_name">
+            <field name="template_id" ref="template_agreement_sign"/>
+            <field name="type_id" ref="sign.sign_item_type_name"/>
+            <field name="name">partner_id.name</field>
+            <field name="responsible_id" ref="sign.sign_item_role_customer"/>
+            <field name="page" type="int">1</field>
+            <field name="posX" type="float">0.264</field>
+            <field name="posY" type="float">0.135</field>
+            <field name="width" type="float">0.281</field>
+            <field name="height" type="float">0.014</field>
+            <field name="name">Name</field>
+        </record>
+        <record model="sign.item" id="sign_item_sign_customer">
+            <field name="template_id" ref="template_agreement_sign"/>
+            <field name="type_id" ref="sign.sign_item_type_signature"/>
+            <field name="responsible_id" ref="sign.sign_item_role_customer"/>
+            <field name="page" type="int">2</field>
+            <field name="posX" type="float">0.212</field>
+            <field name="posY" type="float">0.516</field>
+            <field name="width" type="float">0.221</field>
+            <field name="height" type="float">0.015</field>
+            <field name="name">Signature</field>
+        </record>
+        <record model="sign.item" id="sign_item_date_customer">
+            <field name="template_id" ref="template_agreement_sign"/>
+            <field name="type_id" ref="sign.sign_item_type_date"/>
+            <field name="responsible_id" ref="sign.sign_item_role_customer"/>
+            <field name="page" type="int">2</field>
+            <field name="posX" type="float">0.171</field>
+            <field name="posY" type="float">0.533</field>
+            <field name="width" type="float">0.150</field>
+            <field name="height" type="float">0.015</field>
+            <field name="name">Date</field>
+        </record>
+
+
+    </data>
+</odoo>

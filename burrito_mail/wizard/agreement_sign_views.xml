@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Wizard view for sign request -->
+    <record id="view_agreement_sign" model="ir.ui.view">
+        <field name="name">agreement.sign.wizard</field>
+        <field name="model">agreement.sign.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Signature Request">
+                <group class="o_label_nowrap">
+                    <field name="sign_template_responsible_ids" invisible="1"/>
+                    <field name="possible_template_ids" invisible="1"/>
+                    <field name="sign_template_ids" options="{'no_create': True}"
+                           kanban_view_ref="%(sign.sign_template_view_kanban_mobile)s"
+                           widget="many2many_tags" force_save="1"/>
+                    <field name="partner_id" required="1"/>
+                </group>
+                <group attrs="{'invisible': [('sign_template_ids', '=', [])]}" string="Sign Request Options">
+                    <field name="partner_role_id" options="{'no_create': True}"/>
+                    <field name="responsible_id" options="{'no_create_edit': True}"/>
+                    <field name="cc_partner_ids" widget="many2many_tags"
+                           placeholder="Write email or search contact..."/>
+                </group>
+                <group class="o_label_nowrap" string="Mail Options">
+                    <field name="subject" placeholder="Signature Request"/>
+                </group>
+                <field name="message" placeholder="Optional Message..." widget="html"/>
+                <field name="attachment_ids" widget="many2many_binary" string="Attach a file"/>
+                <footer>
+                    <button name="validate_signature" string="Send" type="object" class="oe_highlight" data-hotkey="q"/>
+                    <button string="Discard" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <!-- action for the wizard call -->
+    <record id="agreement_sign_documents" model="ir.actions.act_window">
+        <field name="name">Document Signature</field>
+        <field name="res_model">agreement.sign.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

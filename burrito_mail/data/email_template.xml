@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="welcome_email_template" model="mail.template">
+            <field name="name">Welcome Email</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="subject">Welcome to the Burrito Media family!</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="partner_to">{{ object.id }}</field>
+            <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear <t t-out="object.name or ''"/>,
+                    <br/><br/>
+                    We're excited to welcome you to the Burrito Media family! We're thrilled that you've chosen us as your media partner, and we can't wait to embark on this journey together. Your account has been successfully set up, and we're ready to start making waves in the world of media advertising.
+                    As promised, your account is now fully active and ready for action. Our dedicated team is here to assist you every step of the way, ensuring your media campaigns are successful and aligned with your business goals.
+                    <br/><br/>
+                    Additionally, we've added you to our exclusive newsletter. This newsletter is your direct connection to the latest trends in media advertising, industry insights, and updates from Burrito Media. Stay tuned for valuable tips, case studies, and news that will help you make the most of your media campaigns.
+                    <br/><br/>
+                    If you have any questions, need assistance, or simply want to brainstorm ideas, feel free to reach out to our team. We're here to help you achieve the best results and maximise your advertising impact.
+                    Thank you once again for choosing Burrito Media. We're excited about the possibilities that lie ahead and can't wait to see your campaigns come to life.
+                    <br/><br/><br/>
+                    Best regards,<br/>
+                    Burrito Media Team
+                </p>
+            </div>
+            </field>
+            <field name="lang">${object.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+</odoo>

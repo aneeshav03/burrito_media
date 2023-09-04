@@ -1,0 +1,5 @@
+[bandit]
+tests:
+skips: B703,B701,B604
+exclude: /.git,/__pycache__
+recursive = true
