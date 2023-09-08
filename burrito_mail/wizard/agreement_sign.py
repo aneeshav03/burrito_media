@@ -123,10 +123,10 @@ class AgreementSign(models.TransientModel):
             sign_request = sign_request.sudo()
 
         sign_values = []
-        sign_templates_employee_ids = self.sign_template_ids.filtered(
+        sign_templates_partner_ids = self.sign_template_ids.filtered(
             lambda t: len(t.sign_item_ids.mapped("responsible_id")) == 1
         )
-        sign_templates_both_ids = self.sign_template_ids - sign_templates_employee_ids
+        sign_templates_both_ids = self.sign_template_ids - sign_templates_partner_ids
         for sign_template_id in sign_templates_employee_ids:
             sign_values.append(
                 (
